@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  ssh-test:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - add_ssh_keys
+      - run:
+          name: Test SSH connection
+          command: |
+            ssh -o StrictHostKeyChecking=no \
+              ${SSH_USER}@${SSH_HOST} \
+              "echo 'SSH CONNECTED SUCCESSFULLY'"
+
+workflows:
+  ssh_test_workflow:
+    jobs:
+      - ssh-test
